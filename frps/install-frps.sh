@@ -556,6 +556,8 @@ token = ${set_token}
 max_pool_count = ${set_max_pool_count}
 # if tcp stream multiplexing is used, default is true
 tcp_mux = ${set_tcp_mux}
+# support for client subdomain
+subdomain_host = ${set_subdomain_host}
 EOF
 else
 cat > ${str_program_dir}/${program_config_file}<<-EOF
