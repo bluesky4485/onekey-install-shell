@@ -13,8 +13,8 @@ str_program_dir="/usr/local/${program_name}"
 program_init="/etc/init.d/${program_name}"
 program_config_file="frps.ini"
 ver_file="/tmp/.frp_ver.sh"
-program_version_link="https://raw.githubusercontent.com/clangcn/onekey-install-shell/master/frps/version.sh"
-str_install_shell=https://raw.githubusercontent.com/clangcn/onekey-install-shell/master/frps/install-frps.sh
+program_version_link="https://raw.githubusercontent.com/bluesky4485/onekey-install-shell/master/frps/version.sh"
+str_install_shell=https://raw.githubusercontent.com/bluesky4485/onekey-install-shell/master/frps/install-frps.sh
 shell_update(){
     fun_clangcn "clear"
     echo "Check updates for shell..."
@@ -295,7 +295,7 @@ fun_input_dashboard_port(){
     fun_check_port "dashboard" "${input_dashboard_port}"
 }
 fun_input_vhost_http_port(){
-    def_vhost_http_port="80"
+    def_vhost_http_port="8000"
     echo ""
     echo -n -e "Please input ${program_name} ${COLOR_GREEN}vhost_http_port${COLOR_END} [1-65535]"
     read -p "(Default vhost_http_port: ${def_vhost_http_port}):" input_vhost_http_port
@@ -365,10 +365,10 @@ pre_install_clang(){
         [ -z "${set_dashboard_user}" ] && set_dashboard_user="${def_dashboard_user}"
         echo "${program_name} dashboard_user: ${set_dashboard_user}"
         echo ""
-        def_subdomain_host = "frps.com"
+        def_subdomain_host="frps.com"
         read -p "Please input subdomain_host (Default: ${def_dashboard_user}):" set_subdomain_host
-        [ -z "${set_subdomain_host}" ] && set_subdomain_host="${def_dashboard_user}"
-        echo "${program_name} dashboard_user: ${set_subdomain_host}"
+        [ -z "${set_subdomain_host}" ] && set_subdomain_host="${def_subdomain_host}"
+        echo "${program_name} subdomain_host: ${set_subdomain_host}"
         echo ""
         def_dashboard_pwd=`fun_randstr 8`
         read -p "Please input dashboard_pwd (Default: ${def_dashboard_pwd}):" set_dashboard_pwd
@@ -498,7 +498,7 @@ pre_install_clang(){
         echo -e "Log level          : ${COLOR_GREEN}${str_log_level}${COLOR_END}"
         echo -e "Log max days       : ${COLOR_GREEN}${set_log_max_days}${COLOR_END}"
         echo -e "Log file           : ${COLOR_GREEN}${str_log_file_flag}${COLOR_END}"
-        echo -e "subdomain_host     : ${COLOR_GREEN}${set_subdomain_host}${COLOR_END}"
+        echo -e "Subdomain Host     : ${COLOR_GREEN}${set_subdomain_host}${COLOR_END}"
         echo "=============================================="
         echo ""
         echo "Press any key to start...or Press Ctrl+c to cancel"
@@ -629,7 +629,7 @@ fi
     echo -e "Log level          : ${COLOR_GREEN}${str_log_level}${COLOR_END}"
     echo -e "Log max days       : ${COLOR_GREEN}${set_log_max_days}${COLOR_END}"
     echo -e "Log file           : ${COLOR_GREEN}${str_log_file_flag}${COLOR_END}"
-    echo -e "subdomain_host     : ${COLOR_GREEN}${set_subdomain_host}${COLOR_END}"
+    echo -e "Subdomain Host     : ${COLOR_GREEN}${set_subdomain_host}${COLOR_END}"
     echo "=============================================="
     echo -e "${program_name} Dashboard     : ${COLOR_GREEN}http://${defIP}:${set_dashboard_port}/${COLOR_END}"
     echo -e "Dashboard user     : ${COLOR_GREEN}${set_dashboard_user}${COLOR_END}"
