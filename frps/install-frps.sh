@@ -365,6 +365,11 @@ pre_install_clang(){
         [ -z "${set_dashboard_user}" ] && set_dashboard_user="${def_dashboard_user}"
         echo "${program_name} dashboard_user: ${set_dashboard_user}"
         echo ""
+        def_subdomain_host = "frps.com"
+        read -p "Please input subdomain_host (Default: ${def_dashboard_user}):" set_subdomain_host
+        [ -z "${set_subdomain_host}" ] && set_subdomain_host="${def_dashboard_user}"
+        echo "${program_name} dashboard_user: ${set_subdomain_host}"
+        echo ""
         def_dashboard_pwd=`fun_randstr 8`
         read -p "Please input dashboard_pwd (Default: ${def_dashboard_pwd}):" set_dashboard_pwd
         [ -z "${set_dashboard_pwd}" ] && set_dashboard_pwd="${def_dashboard_pwd}"
@@ -493,6 +498,7 @@ pre_install_clang(){
         echo -e "Log level          : ${COLOR_GREEN}${str_log_level}${COLOR_END}"
         echo -e "Log max days       : ${COLOR_GREEN}${set_log_max_days}${COLOR_END}"
         echo -e "Log file           : ${COLOR_GREEN}${str_log_file_flag}${COLOR_END}"
+        echo -e "subdomain_host     : ${COLOR_GREEN}${set_subdomain_host}${COLOR_END}"
         echo "=============================================="
         echo ""
         echo "Press any key to start...or Press Ctrl+c to cancel"
@@ -574,6 +580,8 @@ token = ${set_token}
 max_pool_count = ${set_max_pool_count}
 # if tcp stream multiplexing is used, default is true
 tcp_mux = ${set_tcp_mux}
+# support for client subdomain
+subdomain_host = ${set_subdomain_host}
 EOF
 fi
     echo " done"
@@ -621,6 +629,7 @@ fi
     echo -e "Log level          : ${COLOR_GREEN}${str_log_level}${COLOR_END}"
     echo -e "Log max days       : ${COLOR_GREEN}${set_log_max_days}${COLOR_END}"
     echo -e "Log file           : ${COLOR_GREEN}${str_log_file_flag}${COLOR_END}"
+    echo -e "subdomain_host     : ${COLOR_GREEN}${set_subdomain_host}${COLOR_END}"
     echo "=============================================="
     echo -e "${program_name} Dashboard     : ${COLOR_GREEN}http://${defIP}:${set_dashboard_port}/${COLOR_END}"
     echo -e "Dashboard user     : ${COLOR_GREEN}${set_dashboard_user}${COLOR_END}"
