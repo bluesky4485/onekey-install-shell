@@ -56,5 +56,5 @@ server {
     }
 }
 EOF
-
+nginx
 nginx -s reload
