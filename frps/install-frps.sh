@@ -328,6 +328,14 @@ fun_input_max_pool_count(){
     [ -z "${input_max_pool_count}" ] && input_max_pool_count="${def_max_pool_count}"
     fun_check_number "max_pool_count" "${def_max_pool}" "${input_max_pool_count}"
 }
+fun_install_nginx(){
+    wget https://setup.ius.io/ -O ius.sh
+    chmod +x ius.sh
+    ./ius.sh
+    yum update -y
+
+    yum install git2u nginx tmux2u -y
+}
 pre_install_clang(){
     fun_clangcn
     echo -e "Check your server setting, please wait..."
@@ -340,6 +348,7 @@ pre_install_clang(){
         fun_get_version
         fun_getServer
         fun_getVer
+        fun_install_nginx
         echo -e "Loading You Server IP, please wait..."
         defIP=$(wget -qO- ip.clang.cn | sed -r 's/\r//')
         echo -e "You Server IP:${COLOR_GREEN}${defIP}${COLOR_END}"
@@ -641,6 +650,34 @@ fi
     echo -e "  start: ${COLOR_PINK}${program_name}${COLOR_END} ${COLOR_GREEN}start${COLOR_END}"
     echo -e "   stop: ${COLOR_PINK}${program_name}${COLOR_END} ${COLOR_GREEN}stop${COLOR_END}"
     echo -e "restart: ${COLOR_PINK}${program_name}${COLOR_END} ${COLOR_GREEN}restart${COLOR_END}"
+    echo -e "Write nginx config file:"
+    cat > /etc/nginx/conf.d/frps.conf<<-EOF
+upstream ngrok {
+    server 127.0.0.1:${set_vhost_http_port};
+    keepalive 64;
+}
+
+server {
+    listen       80;
+    server_name  *.${set_subdomain_host};
+
+    #charset koi8-r;
+    #access_log  /var/log/nginx/log/host.access.log  main;
+
+    location / {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host  $http_host:${set_vhost_http_port};
+        proxy_set_header X-Nginx-Proxy true;
+        proxy_set_header Connection "";
+        proxy_pass      http://ngrok;
+
+    }
+}
+EOF
+
+    ${program_name} start
+    nginx
     exit 0
 }
 ############################### configure ##################################
