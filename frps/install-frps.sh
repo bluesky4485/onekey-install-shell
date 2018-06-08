@@ -348,7 +348,6 @@ pre_install_clang(){
         fun_get_version
         fun_getServer
         fun_getVer
-        fun_install_nginx
         echo -e "Loading You Server IP, please wait..."
         defIP=$(wget -qO- ip.clang.cn | sed -r 's/\r//')
         echo -e "You Server IP:${COLOR_GREEN}${defIP}${COLOR_END}"
@@ -518,6 +517,7 @@ pre_install_clang(){
 }
 # ====== install server ======
 install_program_server_clang(){
+     fun_install_nginx
     [ ! -d ${str_program_dir} ] && mkdir -p ${str_program_dir}
     cd ${str_program_dir}
     echo "${program_name} install path:$PWD"
@@ -679,7 +679,7 @@ server {
 EOF
 
     ${program_name} start
-    nginx
+    nginx -s reload
     exit 0
 }
 ############################### configure ##################################
