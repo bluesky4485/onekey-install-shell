@@ -3,7 +3,7 @@
 wget https://setup.ius.io/ -O ius.sh
 chmod +x ius.sh
 ./ius.sh
-yum remove git*
+yum remove git* -y
 yum update -y
 
 yum install git2u nginx tmux2u -y
