@@ -375,7 +375,7 @@ pre_install_clang(){
         echo "${program_name} dashboard_user: ${set_dashboard_user}"
         echo ""
         def_subdomain_host="frps.com"
-        read -p "Please input subdomain_host (Default: ${def_dashboard_user}):" set_subdomain_host
+        read -p "Please input subdomain_host (Default: ${def_subdomain_host}):" set_subdomain_host
         [ -z "${set_subdomain_host}" ] && set_subdomain_host="${def_subdomain_host}"
         echo "${program_name} subdomain_host: ${set_subdomain_host}"
         echo ""
