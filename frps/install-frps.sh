@@ -667,9 +667,9 @@ server {
     #access_log  /var/log/nginx/log/host.access.log  main;
 
     location / {
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host  $http_host:${set_vhost_http_port};
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header Host  \$http_host:${set_vhost_http_port};
         proxy_set_header X-Nginx-Proxy true;
         proxy_set_header Connection "";
         proxy_pass      http://ngrok;
